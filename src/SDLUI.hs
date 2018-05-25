@@ -1,8 +1,5 @@
 module SDLUI
-    (
+    ( module SDLUI.Components
     ) where
 
-import           Apecs
-import qualified SDL
-import qualified SDL.Font as SDL
-
+import           SDLUI.Components

@@ -24,6 +24,9 @@ dependencies:
 - sdl2 == 2.4.*
 - sdl2-ttf == 2.0.*
 - apecs == 0.2.*
+- text == 1.2.*
+- linear
+- deepseq
 
 library:
   source-dirs: src
@@ -38,3 +41,23 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - sdl-apecs-ui
+
+default-extensions: &extensions
+  - LambdaCase
+  - PatternSynonyms
+  - GeneralizedNewtypeDeriving
+  - DeriveFunctor
+  - DeriveFoldable
+  - DeriveTraversable
+  - DeriveDataTypeable
+  - ScopedTypeVariables
+  - GADTs
+  - TypeFamilies
+  - RankNTypes
+  - ViewPatterns
+  - TypeApplications
+  - MultiParamTypeClasses
+  - FlexibleContexts
+  - ConstraintKinds
+  - TypeOperators
+  - DataKinds
