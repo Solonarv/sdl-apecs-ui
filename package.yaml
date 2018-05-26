@@ -8,7 +8,6 @@ copyright:           "2018 Solonarv"
 
 extra-source-files:
 - README.md
-- ChangeLog.md
 
 # Metadata used when publishing your package
 synopsis:            A GUI library built on top of SDL and Apecs.
@@ -27,6 +26,13 @@ dependencies:
 - text == 1.2.*
 - linear
 - deepseq
+- data-default
+- lens
+- containers
+- unordered-containers
+- vector
+- hashable
+- template-haskell
 
 library:
   source-dirs: src

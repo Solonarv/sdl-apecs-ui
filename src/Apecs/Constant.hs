@@ -1,25 +1,25 @@
 module Apecs.Constant (type Constant) where
 
-import           Control.DeepSeq
+import           Data.IORef
+import           Data.Maybe
 
-import qualified Apecs.Slice     as Slice
+import qualified Apecs.Slice as Slice
 import           Apecs.Types
 
-import           Data.IVar       (IVar)
-import qualified Data.IVar       as IVar
+-- | A write-once global store. Writing to it more than once will have no effect.
+newtype Constant a = Constant { constVal :: IORef (Maybe a) }
 
--- | A write-once global store. Writing to it more than once will throw an error.
-newtype Constant a = Constant { constVal :: IVar a }
-
-instance NFData a => Store (Constant a) where
+instance Store (Constant a) where
   type Stores (Constant a) = a
   type SafeRW (Constant a) = a
-  initStore = Constant <$> IVar.new
-  explGet (Constant v) _ = IVar.get v
-  explSet (Constant v) _ = IVar.fill v
+  initStore = Constant <$> newIORef Nothing
+  explGet (Constant v) _ = fromMaybe (error "Apecs.Constant: get: no value set") <$> readIORef v
+  explSet (Constant v) _ a = readIORef v >>= \case
+    Nothing -> writeIORef v (Just a)
+    Just _ -> pure ()
   explDestroy _ _ = pure ()
-  explMembers = Slice.empty
+  explMembers = mempty
   explGetUnsafe = explGet
   explSetMaybe = explSet
 
-instance NFData a => GlobalStore (Constant a)
+instance GlobalStore (Constant a)
